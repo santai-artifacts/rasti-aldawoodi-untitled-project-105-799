@@ -25,7 +25,8 @@ function todayUTC(): string {
 
 async function fetchNeo(): Promise<{ count: number; objects: Neo[] }> {
   const today = todayUTC();
-  const url = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=DEMO_KEY`;
+  const key = process.env.NASA_API_KEY ?? "DEMO_KEY";
+  const url = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=${key}`;
   const res = await fetch(url, { next: { revalidate: 3600 } });
   if (!res.ok) throw new Error(`NEO fetch failed: ${res.status}`);
   const data: NeoFeed = await res.json();

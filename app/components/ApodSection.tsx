@@ -11,7 +11,8 @@ interface ApodData {
 }
 
 async function fetchApod(): Promise<ApodData> {
-  const res = await fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY", {
+  const key = process.env.NASA_API_KEY ?? "DEMO_KEY";
+  const res = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${key}`, {
     next: { revalidate: 3600 },
   });
   if (!res.ok) throw new Error(`APOD fetch failed: ${res.status}`);

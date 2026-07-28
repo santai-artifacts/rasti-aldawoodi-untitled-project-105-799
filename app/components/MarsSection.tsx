@@ -11,7 +11,7 @@ interface MarsPhoto {
 
 async function fetchMarsPhotos(): Promise<MarsPhoto[]> {
   const res = await fetch(
-    "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=3500&page=1&api_key=DEMO_KEY",
+    `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=3500&page=1&api_key=${process.env.NASA_API_KEY ?? "DEMO_KEY"}`,
     { next: { revalidate: 86400 } }
   );
   if (!res.ok) throw new Error(`Mars photos fetch failed: ${res.status}`);
